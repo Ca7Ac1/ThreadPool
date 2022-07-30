@@ -4,7 +4,7 @@ A custom C++ thread pool
 It is extraordinarily simple, and I made it just to dip my hands into concurrency. 
                  
 SMALL CHUNKS: 1e6 additions each on a different thread
-______________________________________________________
+\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_
 Running on main thread: 4 milliseconds
 Running on 1 thread: 1150 milliseconds
 Running on 2 thread: 1031 milliseconds
@@ -18,7 +18,7 @@ Running on 9 thread: 5590 milliseconds
 Running on 10 thread: 6033 milliseconds
 
 BIG CHUNKS: 1e3 additions of chunks of 1e6 size
-_______________________________________________
+\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_
 Running on main thread: 1684 milliseconds
 Running on 1 thread: 1666 milliseconds
 Running on 2 thread: 859 milliseconds
