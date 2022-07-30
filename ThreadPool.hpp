@@ -26,6 +26,8 @@ public:
 
     template <class... Args>
     void addTask(std::function<void()> f, Args... args);
+
+    void join();
 };
 
 #endif

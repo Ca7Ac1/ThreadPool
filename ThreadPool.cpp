@@ -29,6 +29,15 @@ ThreadPool::ThreadPool(int maxThreads) : maxThreads(maxThreads),
 
 ThreadPool::~ThreadPool()
 {
+    running = false;
+
+    join();
+    
+    delete[] threads;
+}
+
+void ThreadPool::join()
+{
     for (int i = 0; i < maxThreads; i++)
     {
         if (threads[i].joinable())
@@ -36,10 +45,8 @@ ThreadPool::~ThreadPool()
             threads[i].join();
         }
     }
-
-    delete[] threads;
-    running = false;
 }
+
 
 template <class... Args>
 void ThreadPool::addTask(std::function<void()> f, Args... args)
