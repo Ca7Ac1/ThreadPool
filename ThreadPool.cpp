@@ -47,17 +47,3 @@ void ThreadPool::join()
         }
     }
 }
-
-template <class... Args>
-void ThreadPool::addTask(std::function<void()> f, Args... args)
-{
-    std::unique_lock<std::mutex> lock(locked);
-
-    Task task;
-    task.task = std::bind(f, args);
-    
-    tasks.push(task);
-
-    lock.unlock();
-    avaliable.notify_one();
-}

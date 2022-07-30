@@ -6,9 +6,9 @@
 #include <thread>
 #include <mutex>
 
-struct Task 
+struct Task
 {
-    std::function<void()> &task;
+    std::function<void()> task;
 };
 
 class ThreadPool
@@ -29,8 +29,19 @@ public:
     ThreadPool(int maxThreads);
     ~ThreadPool();
 
-    template <class... Args>
-    void addTask(std::function<void()> f, Args... args);
+    template <typename Callable, typename... Args>
+    void addTask(Callable &&f, Args &&...args)
+    {
+        std::unique_lock<std::mutex> lock(locked);
+
+        Task task;
+        task.task = std::bind(f, args...);
+
+        tasks.push(task);
+
+        lock.unlock();
+        avaliable.notify_one();
+    }
 
     void join();
 };
