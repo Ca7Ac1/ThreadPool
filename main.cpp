@@ -86,12 +86,12 @@ void bigChunk()
 
 int main()
 {
-    std::cout << "                 SMALL CHUNK                 " << std::endl;
-    std::cout << "_____________________________________________" << std::endl;
+    std::cout << "                  SMALL CHUNKS                 " << std::endl;
+    std::cout << "_______________________________________________" << std::endl;
     smallChunk();
    
-    std::cout << "                  BIG CHUNK                  " << std::endl;
-    std::cout << "_____________________________________________" << std::endl;
+    std::cout << "                   BIG CHUNKS                  " << std::endl;
+    std::cout << "_______________________________________________" << std::endl;
     bigChunk();
 
     return 0;
