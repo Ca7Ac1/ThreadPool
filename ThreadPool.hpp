@@ -15,6 +15,7 @@ private:
     std::mutex locked;
     std::condition_variable avaliable;
 
+    int maxThreads;
     bool running;
 
     void work();

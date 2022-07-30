@@ -17,7 +17,9 @@ void ThreadPool::work()
     }
 }
 
-ThreadPool::ThreadPool(int maxThreads) : running(true), threads(new std::thread[maxThreads])
+ThreadPool::ThreadPool(int maxThreads) : maxThreads(maxThreads),
+                                         running(true),
+                                         threads(new std::thread[maxThreads])
 {
     for (int i = 0; i < maxThreads; i++)
     {
@@ -27,6 +29,14 @@ ThreadPool::ThreadPool(int maxThreads) : running(true), threads(new std::thread[
 
 ThreadPool::~ThreadPool()
 {
+    for (int i = 0; i < maxThreads; i++)
+    {
+        if (threads[i].joinable())
+        {
+            threads[i].join();
+        }
+    }
+
     delete[] threads;
     running = false;
 }
