@@ -86,11 +86,11 @@ void bigChunk()
 
 int main()
 {
-    std::cout << "                  SMALL CHUNKS                 " << std::endl;
-    std::cout << "_______________________________________________" << std::endl;
+    std::cout << "SMALL CHUNKS: 1e6 additions each on a different thread" << std::endl;
+    std::cout << "______________________________________________________" << std::endl;
     smallChunk();
    
-    std::cout << "                   BIG CHUNKS                  " << std::endl;
+    std::cout << "BIG CHUNKS: 1e3 additions of chunks of 1e6 size" << std::endl;
     std::cout << "_______________________________________________" << std::endl;
     bigChunk();
 
