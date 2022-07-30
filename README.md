@@ -55,4 +55,6 @@ Running on 9 thread: 284 milliseconds
 
 Running on 10 thread: 285 milliseconds
 
+--------------------------------------------------------
+
 These tests show how there is quite a significant overhead in creating threads, but if each thread does enough work it does result in a significant speed up.
