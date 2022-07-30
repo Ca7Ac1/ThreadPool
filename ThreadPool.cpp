@@ -8,7 +8,7 @@ void ThreadPool::work()
         avaliable.wait(lock, [&]()
                        { return !running || !tasks.empty(); });
 
-        std::function<void()> task = tasks.front();
+        std::function<void()> task = tasks.front().task;
 
         tasks.pop();
         lock.unlock();
@@ -17,13 +17,14 @@ void ThreadPool::work()
     }
 }
 
-ThreadPool::ThreadPool(int maxThreads) : maxThreads(maxThreads),
-                                         running(true),
+ThreadPool::ThreadPool(int maxThreads) : tasks(), running(true),
+                                         locked(), avaliable(),
+                                         maxThreads(maxThreads),
                                          threads(new std::thread[maxThreads])
 {
     for (int i = 0; i < maxThreads; i++)
     {
-        threads[i] = std::thread(&work);
+        threads[i] = std::thread(&ThreadPool::work, this);
     }
 }
 
@@ -32,7 +33,7 @@ ThreadPool::~ThreadPool()
     running = false;
 
     join();
-    
+
     delete[] threads;
 }
 
@@ -47,13 +48,15 @@ void ThreadPool::join()
     }
 }
 
-
 template <class... Args>
 void ThreadPool::addTask(std::function<void()> f, Args... args)
 {
     std::unique_lock<std::mutex> lock(locked);
 
-    tasks.push(std::bind(f, args));
+    Task task;
+    task.task = std::bind(f, args);
+    
+    tasks.push(task);
 
     lock.unlock();
     avaliable.notify_one();

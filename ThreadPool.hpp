@@ -6,10 +6,15 @@
 #include <thread>
 #include <mutex>
 
+struct Task 
+{
+    std::function<void()> &task;
+};
+
 class ThreadPool
 {
 private:
-    std::queue<std::function<void>()> tasks;
+    std::queue<Task> tasks;
     std::thread *threads;
 
     std::mutex locked;
