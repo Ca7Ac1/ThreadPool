@@ -8,6 +8,11 @@ void ThreadPool::work()
         avaliable.wait(lock, [&]()
                        { return !running || !tasks.empty(); });
 
+        if (!running)
+        {
+            break;
+        }
+
         std::function<void()> task = tasks.front().task;
 
         tasks.pop();
