@@ -35,15 +35,22 @@ ThreadPool::ThreadPool(int maxThreads) : tasks(), running(true),
 
 ThreadPool::~ThreadPool()
 {
-    running = false;
-
-    join();
-
-    delete[] threads;
+    if (running)
+    {
+        end();
+    }
 }
 
-void ThreadPool::join()
+void ThreadPool::end()
 {
+    while (!tasks.empty())
+    {
+        continue;
+    }
+
+    running = false;
+    avaliable.notify_all();
+
     for (int i = 0; i < maxThreads; i++)
     {
         if (threads[i].joinable())
@@ -51,4 +58,6 @@ void ThreadPool::join()
             threads[i].join();
         }
     }
+
+    delete[] threads;
 }

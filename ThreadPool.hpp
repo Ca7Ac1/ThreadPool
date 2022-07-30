@@ -43,7 +43,7 @@ public:
         avaliable.notify_one();
     }
 
-    void join();
+    void end();
 };
 
 #endif
